@@ -11,6 +11,9 @@
 FROM almalinux:8.4
 # SHELL ["/bin/bash", "-c"]
 
+#SELinuxを無効化
+# RUN setenforce 0
+
 # アップデート＆必要パッケージのインストール
 # RUN rpm --import http://mirror.centos.org/centos/RPM-GPG-KEY-CentOS-7
 # RUN rpm --import http://dl.fedoraproject.org/pub/epel/RPM-GPG-KEY-EPEL-7
@@ -61,7 +64,8 @@ RUN dnf -y install dnf-plugins-core
 RUN dnf config-manager --set-enabled remi
 
 # RUN dnf -y install httpd && dnf clean all
-RUN dnf -y install httpd httpd-tools httpd-devel mod_ssl && dnf clean all
+# ↓以下のコマンドからmod_sslを削除
+RUN dnf -y install httpd httpd-tools httpd-devel && dnf clean all
 # RUN systemctl start httpd
 # RUN systemctl enable httpd
 
@@ -80,5 +84,7 @@ RUN curl -sS https://getcomposer.org/installer | php
 RUN mv composer.phar /usr/local/bin/composer
 
 WORKDIR /var/www/html
+
+EXPOSE 80
 
 CMD ["/usr/sbin/httpd","-D","FOREGROUND"]

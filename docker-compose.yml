@@ -4,8 +4,9 @@ services:
     container_name: "laravel"
     build:
       context: ./apache-php
-    ports: 
+    ports:
       - 80:80
+      # - 443:443
     links:
       - mysql
     privileged: true
