@@ -1,0 +1,42 @@
+version: "3"
+services:
+  web:
+    container_name: "laravel"
+    build:
+      context: ./apache-php
+    ports: 
+      - 80:80
+    links:
+      - mysql
+    privileged: true
+    volumes:
+      - ./html:/var/www/html/
+      - ./apache-php/httpd.conf:/etc/httpd/conf/httpd.conf
+      # - ./apache-php/:/etc/httpd/conf/
+  mysql:
+    container_name: "mysql"
+    image: mysql:8.0
+    # restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: P@ssw0rd
+      MYSQL_DATABASE: board
+      MYSQL_USER: user
+      MYSQL_PASSWORD: password
+      # TZ: 'Asia/Tokyo'
+    ports:
+      - 3306:3306
+    volumes:
+      - ./mysql-db:/var/lib/mysql
+    command: mysqld --character-set-server=utf8mb4 --collation-server=utf8mb4_unicode_ci
+  phpmyadmin:
+    container_name: "phpmyadmin"
+    image: phpmyadmin:5
+    environment:
+      - PMA_ARBITRARY=1
+      - PMA_HOST=mysql
+      - PMA_USER=root
+      - PMA_PASSWORD=P@ssw0rd
+    links:
+      - mysql
+    ports:
+      - 8080:80
