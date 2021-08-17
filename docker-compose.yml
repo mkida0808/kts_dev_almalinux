@@ -6,6 +6,7 @@ services:
       context: ./apache-php
     ports:
       - 80:80
+      # - 443:443
     links:
       - mysql
     privileged: true
@@ -18,10 +19,10 @@ services:
     image: mysql:8.0
     # restart: always
     environment:
-      MYSQL_ROOT_PASSWORD: P@ssw0rd
-      MYSQL_DATABASE: board
-      MYSQL_USER: user
-      MYSQL_PASSWORD: password
+      MYSQL_ROOT_PASSWORD: password
+      MYSQL_DATABASE: laravelapp
+      # MYSQL_USER: user
+      # MYSQL_PASSWORD: password
       # TZ: 'Asia/Tokyo'
     ports:
       - 3306:3306
@@ -34,8 +35,8 @@ services:
     environment:
       - PMA_ARBITRARY=1
       - PMA_HOST=mysql
-      - PMA_USER=root
-      - PMA_PASSWORD=P@ssw0rd
+      - PMA_USER=user
+      - PMA_PASSWORD=password
     links:
       - mysql
     ports:

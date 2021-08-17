@@ -58,6 +58,13 @@ RUN dnf -y update epel-release && dnf clean all
 # RUN ls -l /etc/pki/rpm-gpg/
 
 RUN dnf module install php:remi-8.0 -y
+
+# 近喰さんのソースより（PHP8部分）
+# RUN dnf install -y php php-bcmath php-cli php-common php-dba php-dbg php-devel php-embedded php-enchant php-fpm php-gd php-gmp php-imap php-intl php-ldap php-litespeed php-mbstring php-mcrypt php-mysqlnd php-odbc php-opcache php-pdo php-pear php-pgsql php-process php-pspell php-snmp php-soap php-tidy php-xml php-xmlrpc
+
+RUN dnf install -y php80 php80-{php-bcmath,php-cli,php-common,php-dba,php-dbg,php-devel,php-embedded,php-enchant,php-fpm,php-gd,php-gmp,php-imap,php-intl,php-ldap,php-litespeed,php-mbstring,php-mcrypt,php-mysqlnd,php-odbc,php-opcache,php-pdo,php-pear,php-pgsql,php-process,php-pspell,php-snmp,php-soap,php-tidy,php-xml,php-xmlrpc}
+# RUN dnf -y install php80-php-pdo_mysql
+
 RUN dnf module enable php:remi-8.0
 
 RUN dnf -y install dnf-plugins-core
@@ -85,6 +92,6 @@ RUN mv composer.phar /usr/local/bin/composer
 
 WORKDIR /var/www/html
 
-EXPOSE 80
+# EXPOSE 80
 
 CMD ["/usr/sbin/httpd","-D","FOREGROUND"]

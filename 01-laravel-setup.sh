@@ -1,12 +1,12 @@
 #!/bin/sh
 
 # Laravelプロジェクト名/DB名
-PROJECT=board
+PROJECT=laravelapp
 # DB Password
-PASSWORD=P@ssw0rd
+PASSWORD=password
 
 # Laravelプロジェクトを作成
-docker exec -it laravel composer create-project "laravel/laravel=6.0.*" $PROJECT
+docker exec -it laravel composer create-project --prefer-dist "laravel/laravel=6.*" $PROJECT
 docker exec -it laravel /bin/bash -c "cd /var/www/html/$PROJECT; chmod -R 777 ./storage; chmod -R 777 ./bootstrap/cache/"
 
 # httpd.confをバックアップ後、Document Rootなどを書き換え
